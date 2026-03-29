@@ -1,0 +1,7 @@
+.env
+venv/
+.truth
+__pycache__/
+data/chromadb/
+logs/
+*.pyc

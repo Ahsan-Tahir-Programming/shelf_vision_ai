@@ -1,0 +1,26 @@
+# later install it by run pip freeze req... . txt
+# Gemini AI
+google-genai>=1.0.0
+
+# LangChain
+langchain>=0.3.0
+langchain-google-genai>=2.0.0
+
+# Vector Database (Phase 4)
+chromadb=1.5.5
+
+# Data validation
+pydantic>=2.0.0
+
+# Image processing
+Pillow>=10.0.0
+
+# API Framework (Phase 6)
+fastapi>=0.110.0
+uvicorn>=0.29.0
+
+# UI (Phase 6)
+gradio>=4.0.0
+
+# Utilities
+python-dotenv>=1.0.0
