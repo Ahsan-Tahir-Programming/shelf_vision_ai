@@ -2,7 +2,7 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from app.models.schemas import ShelfAnalysis
-from app.core.config import GEMINI_API_KEY, MODEL
+from app.core.config import GEMINI_API_KEY, GEMINI_MODEL
 from app.core.rag import build_rag_context
 
 CHAT_SYSTEM_PROMPT = """
@@ -66,7 +66,7 @@ class ShelfChatSession:
         self.analysis = analysis
         self.store_name = store_name
         self.llm = ChatGoogleGenerativeAI(
-            model=MODEL,
+            model=GEMINI_MODEL,
             google_api_key=GEMINI_API_KEY,
             temperature=0.3,
         )

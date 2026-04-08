@@ -1,8 +1,12 @@
 # main.py
 import os
+from unittest import result
+from app.agents import agent
 from app.core.analyzer import analyze_shelf_image
 from app.core.chat import ShelfChatSession
-from app.core.rag import save_audit, get_database_stats
+from app.agents.agent import create_shelf_agent
+from langchain_core.messages import HumanMessage, AIMessage
+from app.core.rag import save_audit, get_database_stats, get_store_history
 
 IMAGE_PATH = "images/test_shelf.jpg"
 
@@ -43,6 +47,7 @@ def main():
 
     # Start chat session with RAG
     session = ShelfChatSession(analysis=analysis, store_name=store_name)
+    agent = create_shelf_agent(analysis=analysis, store_name=store_name)
     print(f"🏷️  Brands: {', '.join(analysis.brands_detected)}")
     print(f"⚠️  Violations: {len(analysis.violations)} found")
 
@@ -54,20 +59,22 @@ def main():
     print("   Type 'quit' to exit")
     print("-"*55 + "\n")
 
+    chat_history = []
+
     while True:
         user_input = input("You: ").strip()
         if not user_input:
             continue
 
         if user_input.lower() == "quit":
-            session.save_conversation("logs/conversation_log.txt")
+            # session.save_conversation("logs/conversation_log.txt")
             print("👋 Goodbye!")
             break
 
-        elif user_input.lower() == "save":
-            session.save_conversation("logs/conversation_log.txt")
-            print("💾 Conversation saved!\n")
-            continue
+        # elif user_input.lower() == "save":
+        #     session.save_conversation("logs/conversation_log.txt")
+        #     print("💾 Conversation saved!\n")
+        #     continue
 
         elif user_input.lower() == "stats":
             stats = get_database_stats()
@@ -92,9 +99,42 @@ def main():
                           f"ID: {audit['audit_id']}")
                 print()
             continue
+        
+        # Agent handles the message — uses tools automatically
+        print("\n🤖 ShelfVision AI Agent:\n")
+        try:
+            result = agent.invoke({
+                "messages": [("user", user_input)]
+            })
 
-        response = session.chat(user_input)
-        print(f"\n🤖 ShelfVision AI: {response}\n")
+            # Get last message content safely
+            last_message = result["messages"][-1]
+
+            # Handle both string and list content types
+            if isinstance(last_message.content, str):
+                response = last_message.content
+            elif isinstance(last_message.content, list):
+                # Extract text from list of content blocks
+                response = " ".join(
+                    block.get("text", "")
+                    for block in last_message.content
+                    if isinstance(block, dict) and block.get("type") == "text"
+                )
+            else:
+                response = str(last_message.content)
+            print(response)
+
+            # Update chat history
+            chat_history.append(HumanMessage(content=user_input))
+            chat_history.append(AIMessage(content=response))
+
+        except Exception as e:
+            print(f"❌ Agent error: {e}")
+
+        print()
+
+        # response = session.chat(user_input)
+        # print(f"\n🤖 ShelfVision AI: {response}\n")
 
 
 if __name__ == "__main__":

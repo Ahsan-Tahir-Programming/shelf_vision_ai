@@ -4,6 +4,7 @@ from google.genai import types
 from PIL import Image
 from dotenv import load_dotenv
 from app.models.schemas import ShelfAnalysis
+from app.core.config import GEMINI_API_KEY, GEMINI_MODEL
 import os
 import io
 import json
@@ -12,7 +13,6 @@ load_dotenv()
 
 # Single client instance — reused across the app
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-MODEL = "gemini-2.5-flash"
 
 ANALYSIS_SYSTEM_PROMPT = """You are a retail compliance analyst. 
 Always respond with valid JSON only. No markdown, no backticks."""
@@ -65,7 +65,7 @@ def analyze_shelf_image(image_path: str) -> ShelfAnalysis:
     img_bytes = img_byte_arr.getvalue()
 
     response = client.models.generate_content(
-        model=MODEL,
+        model=GEMINI_MODEL,
         config=types.GenerateContentConfig(
             system_instruction=ANALYSIS_SYSTEM_PROMPT,
             temperature=0.1

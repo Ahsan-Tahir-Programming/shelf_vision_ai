@@ -7,6 +7,9 @@ from app.core.config import GEMINI_API_KEY
 from app.models.schemas import ShelfAnalysis, AuditRecord
 from dotenv import load_dotenv
 from datetime import datetime
+from app.core.config import GEMINI_API_KEY, GEMINI_MODEL, CHROMA_DB_PATH
+from app.core.config import GEMINI_EMBEDDING_MODEL
+from app.core.config import GEMINI_API_KEY, GEMINI_MODEL
 import uuid
 import json
 import os
@@ -17,9 +20,6 @@ load_dotenv()
 # CHROMADB SETUP
 # Persistent storage — data survives after program closes
 # ============================================================
-
-CHROMA_DB_PATH = "data/chromadb"
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Ensure directory exists
 os.makedirs(CHROMA_DB_PATH, exist_ok=True)
@@ -42,7 +42,7 @@ class GeminiEmbeddingFunction(EmbeddingFunction):
         embeddings = []
         for text in input:
             result = self.client.models.embed_content(
-                model="gemini-embedding-001",
+                model=GEMINI_EMBEDDING_MODEL,
                 contents=text
             )
             embeddings.append(result.embeddings[0].values)
