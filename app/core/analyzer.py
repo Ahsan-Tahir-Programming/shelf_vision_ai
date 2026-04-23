@@ -12,7 +12,8 @@ import json
 load_dotenv()
 
 # Single client instance — reused across the app
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+client = genai.Client(api_key=GEMINI_API_KEY)
+MODEL = GEMINI_MODEL
 
 ANALYSIS_SYSTEM_PROMPT = """You are a retail compliance analyst. 
 Always respond with valid JSON only. No markdown, no backticks."""

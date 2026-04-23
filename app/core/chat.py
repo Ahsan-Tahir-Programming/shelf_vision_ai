@@ -5,6 +5,9 @@ from app.models.schemas import ShelfAnalysis
 from app.core.config import GEMINI_API_KEY, GEMINI_MODEL
 from app.core.rag import build_rag_context
 
+GEMINI_API_KEY = GEMINI_API_KEY
+MODEL = GEMINI_MODEL
+
 CHAT_SYSTEM_PROMPT = """
 You are ShelfVision AI — an expert retail planogram compliance assistant 
 with 10 years of experience in the FMCG and retail industry in Pakistan.
@@ -22,7 +25,6 @@ Your behavior:
 - Remember everything discussed in the conversation so far
 - When giving action items, be specific and prioritized
 """
-
 
 def build_context(analysis: ShelfAnalysis, store_name: str = None) -> str:
     """Combines current analysis + RAG history into one context"""
@@ -66,7 +68,7 @@ class ShelfChatSession:
         self.analysis = analysis
         self.store_name = store_name
         self.llm = ChatGoogleGenerativeAI(
-            model=GEMINI_MODEL,
+            model=MODEL,
             google_api_key=GEMINI_API_KEY,
             temperature=0.3,
         )

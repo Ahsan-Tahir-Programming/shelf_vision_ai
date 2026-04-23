@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from app.core.config import GEMINI_API_KEY, GEMINI_MODEL
 import os
 
-load_dotenv()
+MODEL = GEMINI_MODEL
 
 def create_shelf_agent(analysis: ShelfAnalysis, store_name: str):
     """
