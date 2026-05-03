@@ -1,7 +1,9 @@
 // frontend/src/api.js
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api";
+// In production, API is on same domain
+// In development, it's on localhost:8000
+const BASE_URL = import.meta.env.PROD ? "/api" : "http://localhost:8000/api";
 
 const api = axios.create({ baseURL: BASE_URL });
 
