@@ -44,6 +44,7 @@ async def analyze_shelf(
 
     # Save uploaded image to temp file
     suffix = os.path.splitext(image.filename)[1] or ".jpg"
+    os.makedirs("images", exist_ok=True)
     with tempfile.NamedTemporaryFile(
         delete=False, suffix=suffix, dir="images"
     ) as tmp:
