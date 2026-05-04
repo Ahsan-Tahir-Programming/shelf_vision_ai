@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js for building React
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+# Node.js 20 — required by Vite 8
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
 # Install Python dependencies
