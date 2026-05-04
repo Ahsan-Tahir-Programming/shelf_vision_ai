@@ -5,3 +5,9 @@ __pycache__/
 data/chromadb/
 logs/
 *.pyc
+
+# Images
+images/
+*.jpg
+*.jpeg
+*.png
