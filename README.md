@@ -179,7 +179,7 @@ shelf-vision-ai/
 **Ahsan Tahir** — Python / AI Engineer  
 Lahore, Pakistan
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](your-linkedin-url)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/ahsan-tahir-880b5324a)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat&logo=github)](https://github.com/Ahsan-Tahir-Programming)
 [![HuggingFace](https://img.shields.io/badge/🤗-HuggingFace-yellow?style=flat)](https://huggingface.co/AhsanTahir1)
 
